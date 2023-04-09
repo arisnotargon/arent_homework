@@ -55,7 +55,7 @@ func (ctr UserController) SignUp(c *gin.Context) {
 	}
 
 	// jwt トケン作成
-	jwtToken, e := utils.CreateToken(60, int(User.ID))
+	jwtToken, e := utils.CreateToken(1440, int(User.ID))
 
 	if e != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"messege": "failed to create jwt token"})
@@ -86,7 +86,7 @@ func (ctr UserController) Login(c *gin.Context) {
 	}
 
 	// jwt トケン作成
-	jwtToken, e := utils.CreateToken(60, int(User.ID))
+	jwtToken, e := utils.CreateToken(1440, int(User.ID))
 
 	if e != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"messege": "failed to create jwt token"})
@@ -94,4 +94,11 @@ func (ctr UserController) Login(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{"token": jwtToken})
+}
+
+func (ctr UserController) GetUserInfo(c *gin.Context) {
+	userId, _ := c.Get("userId")
+	username, _ := c.Get("username")
+
+	c.JSON(http.StatusOK, gin.H{"username": username, "user_id": userId})
 }

@@ -4,6 +4,7 @@ import (
 	_ "time"
 
 	"github.com/arisnotargon/arent_homework/controller"
+	"github.com/arisnotargon/arent_homework/middleware"
 	dbmodel "github.com/arisnotargon/arent_homework/model/db"
 	"github.com/davecgh/go-spew/spew"
 
@@ -38,6 +39,8 @@ func main() {
 
 	r.POST("signup", usrCtr.SignUp)
 	r.POST("login", usrCtr.Login)
+
+	r.Group("user").Use(middleware.JwtMiddlewareGen(db)).GET("info", usrCtr.GetUserInfo)
 
 	r.Run(":9999")
 }
