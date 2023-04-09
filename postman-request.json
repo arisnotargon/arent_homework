@@ -1,0 +1,345 @@
+{
+	"info": {
+		"_postman_id": "e062f651-803b-432c-bb33-2052f52c9b4d",
+		"name": "health_man",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1481008"
+	},
+	"item": [
+		{
+			"name": "signup",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"testunnn1\",\n    \"password\": \"12333\",\n    \"password_confirmation\": \"12333\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "127.0.0.1:9999/signup",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "9999",
+					"path": [
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let resBody = pm.response.json();",
+							"",
+							"if (typeof resBody.token === 'string') {",
+							"    pm.environment.set('jwt', resBody.token)",
+							"}",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"testunnn1\",\n    \"password\": \"12333\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "127.0.0.1:9999/login",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "9999",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "userinfo",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "127.0.0.1:9999/user/info",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "9999",
+					"path": [
+						"user",
+						"info"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "notification/unread_num",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "127.0.0.1:9999/notification/unread_num",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "9999",
+					"path": [
+						"notification",
+						"unread_num"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "notification/list",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "127.0.0.1:9999/notification/list",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "9999",
+					"path": [
+						"notification",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "target_weight",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"target_weight\": \"49.5\",\n    \"now_weight\": \"58.5\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "127.0.0.1:9999/target_weight",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "9999",
+					"path": [
+						"target_weight"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "body_info",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"weight\":\"55.55\",\n    \"fat_rate\":\"11.11\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "127.0.0.1:9999/body_info",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "9999",
+					"path": [
+						"body_info"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "BannerInfo",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "127.0.0.1:9999/body_info/banner_info",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "9999",
+					"path": [
+						"body_info",
+						"banner_info"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ate food store",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"type\":1,\n    \"name\":\"foooooooname\",\n    \"pic\":\"www.xxx.xxxx/xxx.jpg\",\n    \"ate_at\": \"2020-01-02\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "127.0.0.1:9999/ate_food",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "9999",
+					"path": [
+						"ate_food"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ate food lst",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "127.0.0.1:9999/ate_food",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "9999",
+					"path": [
+						"ate_food"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -6,7 +6,6 @@ import (
 	"time"
 
 	"github.com/arisnotargon/arent_homework/config"
-	"github.com/davecgh/go-spew/spew"
 	"github.com/dgrijalva/jwt-go"
 )
 
@@ -30,13 +29,11 @@ func CreateToken(expireMinute int, UserId int) (string, error) {
 }
 
 func VarifyToken(tokenString string) (*jwt.StandardClaims, error) {
-	spew.Dump("in VarifyToken")
 	claims := &jwt.StandardClaims{}
 	token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
 		return []byte(config.Config.JwtSecret), nil
 	})
 
-	// 检查Token是否有效
 	if !token.Valid {
 		return nil, errors.New("invalid token")
 	}

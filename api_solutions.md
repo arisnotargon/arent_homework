@@ -7,8 +7,8 @@
 * [お知らせリスト](#api-detail-notification-list)
 * [目標体重設定](#api-detail-set-target-weight)
 * [達成率、体重体脂肪率記録取得](#api-detail-homepage-banner-info)
-* [食事記録](#api-detail-ate-foods-store)
-* [食事履歴](#api-detail-ate-foods-history)
+* [食事記録](#api-detail-ate-food-store)
+* [食事履歴](#api-detail-ate-food-history)
 * [自分の体の記録](#api-detail-body-info-store)
 * [運動記録](#api-detail-sport-store)
 * [自分の日記](#api-detail-my-diary-store)
@@ -162,7 +162,7 @@ Authorization: Bearer 登録またはログインapi取得したtoken
 
 * uri:
 ```
-  /unread_notification_num
+  /notification/unread_num
 ```
 
 * method
@@ -171,7 +171,7 @@ Authorization: Bearer 登録またはログインapi取得したtoken
 
 * curl例
 ```bash
-curl --location --request GET '127.0.0.1:8080/unread_notification_num' \
+curl --location --request GET '127.0.0.1:8080/notification/unread_num' \
 --header 'X-Requested-With: XMLHttpRequest' \
 --header 'Content-Type: application/json' \
 --header 'Authorization: Bearer 登録またはログインapi取得したtoken'
@@ -199,7 +199,7 @@ Authorization: Bearer 登録またはログインapi取得したtoken
 
 * uri:
 ```
-  /notification_list
+  /notification/list
 ```
 
 * method
@@ -211,7 +211,7 @@ Authorization: Bearer 登録またはログインapi取得したtoken
 
 * curl例
 ```bash
-curl --location --request GET '127.0.0.1:8080/notification_list' \
+curl --location --request GET '127.0.0.1:8080/notification/list' \
 --header 'X-Requested-With: XMLHttpRequest' \
 --header 'Content-Type: application/json' \
 --header 'Authorization: Bearer 登録またはログインapi取得したtoken'
@@ -244,7 +244,7 @@ curl --location --request GET '127.0.0.1:8080/notification_list' \
 
 * uri:
 ```
-  /target_weight
+  /user/target_weight
 ```
 
 * method
@@ -256,13 +256,13 @@ Authorization: Bearer 登録またはログインapi取得したtoken
 
 * curl例
 ```bash
-curl --location --request POST '127.0.0.1:8080/target_weight' \
+curl --location --request POST '127.0.0.1:8080/user/target_weight' \
 --header 'X-Requested-With: XMLHttpRequest' \
 --header 'Content-Type: application/json' \
 --header 'Authorization: Bearer 登録またはログインapi取得したtoken' \
 --data-raw '{
-    "target_weight": 49.5,
-    "now_weight": 55.5
+    "target_weight": "49.5",
+    "now_weight": "55.5"
 }'
 ```
 
@@ -286,7 +286,7 @@ homeページのbannerに日付、達成率、体重体脂肪率履歴書を取�
 
 * uri:
 ```
-  /banner_info
+  /body_info/banner_info
 ```
 
 * method
@@ -298,7 +298,7 @@ Authorization: Bearer 登録またはログインapi取得したtoken
 
 * curl例
 ```bash
-curl --location --request GET '127.0.0.1:8080/banner_info' \
+curl --location --request GET '127.0.0.1:8080/body_info/banner_info' \
 --header 'X-Requested-With: XMLHttpRequest' \
 --header 'Content-Type: application/json' \
 --header 'Authorization: Bearer 登録またはログインapi取得したtoken' 
@@ -308,22 +308,22 @@ curl --location --request GET '127.0.0.1:8080/banner_info' \
 ```json
 {
     "now_date": "2023-01-01",
-    "complete_rate": 85.5,
+    "complete_rate": "85.5",
     "body_history": [
         {
             "date": "2022-01-01",
-            "weight": 55.5,
-            "fat_rate": 35.5
+            "weight": "55.5",
+            "fat_rate": "35.5"
         },
         {
             "date": "2022-02-01",
-            "weight": 55,
-            "fat_rate": 35
+            "weight": "55",
+            "fat_rate": "35"
         },
         {
             "date": "2022-03-01",
-            "weight": 55,
-            "fat_rate": 35
+            "weight": "55",
+            "fat_rate": "35"
         },
     ]
 }
@@ -336,11 +336,11 @@ curl --location --request GET '127.0.0.1:8080/banner_info' \
 ```
 ---
 
-<h3 id="api-detail-ate-foods-store">食事記録</h3>
+<h3 id="api-detail-ate-food-store">食事記録</h3>
 
 * uri:
 ```
-  /ate_foods
+  /ate_food
 ```
 
 * method
@@ -370,7 +370,7 @@ ate_at：食事の時点
 
 * curl例
 ```bash
-curl --location --request POST '127.0.0.1:8080/ate_foods' \
+curl --location --request POST '127.0.0.1:8080/ate_food' \
 --header 'X-Requested-With: XMLHttpRequest' \
 --header 'Content-Type: application/json' \
 --header 'Authorization: Bearer 登録またはログインapi取得したtoken' \
@@ -397,11 +397,11 @@ curl --location --request POST '127.0.0.1:8080/ate_foods' \
 ---
 
 ---
-<h3 id="api-detail-ate-foods-history">食事履歴</h3>
+<h3 id="api-detail-ate-food-history">食事履歴</h3>
 
 * uri:
 ```
-  /ate_foods
+  /ate_food
 ```
 
 * method
@@ -411,25 +411,9 @@ curl --location --request POST '127.0.0.1:8080/ate_foods' \
 * request header
 Authorization: Bearer 登録またはログインapi取得したtoken
 
-* get params
-  
-  skip: 0
-
-  pagesize: 10
-
-  type: 1
-
-  * get params説明：
-  
-    skip: 指定された数の食事履歴をskip、ディフォルト　0
-
-    pagesize: 一回取得する食事履歴数、ディフォルト　10
-
-    type: 食事の類別区分番号、0: 制限なし　1:朝食　2:お昼　3:夕食 4:おやつ、ディフォルト　0
-
 * curl例
 ```bash
-curl --location --request GET '127.0.0.1:8080/ate_foods?skip=0&pagesize=10&type=0' \
+curl --location --request GET '127.0.0.1:8080/ate_food' \
 --header 'X-Requested-With: XMLHttpRequest' \
 --header 'Content-Type: application/json' \
 --header 'Authorization: Bearer 登録またはログインapi取得したtoken'
@@ -438,7 +422,7 @@ curl --location --request GET '127.0.0.1:8080/ate_foods?skip=0&pagesize=10&type=
 * 正常 response body
 ```json
 {
-    "ate_foods_list": [
+    "ate_food_list": [
         {
             "id": 1,
             "type": 1,
@@ -488,8 +472,8 @@ curl --location --request GET '127.0.0.1:8080/ate_foods?skip=0&pagesize=10&type=
 * request body
 ```json
 {
-    "weight": 55.5,
-    "fat_rate": 18.8
+    "weight": "55.5",
+    "fat_rate": "18.8"
 }
 ```
 request body説明：
@@ -503,8 +487,8 @@ curl --location --request POST '127.0.0.1:8080/body_info' \
 --header 'Content-Type: application/json' \
 --header 'Authorization: Bearer 登録またはログインapi取得したtoken' \
 --data-raw '{
-    "weight": 55.5,
-    "fat_rate": 18.8
+    "weight": "55.5",
+    "fat_rate": "18.8"
 }'
 ```
 

@@ -4,7 +4,6 @@ import (
 	"net/http"
 
 	"github.com/arisnotargon/arent_homework/utils"
-	"github.com/davecgh/go-spew/spew"
 	"gorm.io/gorm"
 
 	"strings"
@@ -22,7 +21,6 @@ func JwtMiddlewareGen(db *gorm.DB) gin.HandlerFunc {
 		}
 
 		token := authorizationHeader[1]
-		spew.Dump(token)
 
 		claims, e := utils.VarifyToken(token)
 

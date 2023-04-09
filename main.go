@@ -28,8 +28,14 @@ func main() {
 		panic("failed to connect database")
 	}
 
-	// spew.Dump("db===>", db)
-	db.AutoMigrate(&dbmodel.User{})
+	// create table
+	db.AutoMigrate(
+		&dbmodel.User{},
+		&dbmodel.Notification{},
+		&dbmodel.TargetWeight{},
+		&dbmodel.BodyInfo{},
+		&dbmodel.AteFood{},
+	)
 
 	r := gin.Default()
 
@@ -37,10 +43,41 @@ func main() {
 		Db: db,
 	}
 
+	ntfCtr := &controller.NotificationController{
+		Db: db,
+	}
+
+	twCtr := &controller.TargetWeightController{
+		Db: db,
+	}
+	bfiCtr := &controller.BodyInfoController{
+		Db: db,
+	}
+
+	afCtr := &controller.AteFoodController{
+		Db: db,
+	}
+
 	r.POST("signup", usrCtr.SignUp)
 	r.POST("login", usrCtr.Login)
 
-	r.Group("user").Use(middleware.JwtMiddlewareGen(db)).GET("info", usrCtr.GetUserInfo)
+	r.Group("user").Use(middleware.JwtMiddlewareGen(db)).
+		GET("info", usrCtr.GetUserInfo)
+
+	r.Group("notification").Use(middleware.JwtMiddlewareGen(db)).
+		GET("unread_num", ntfCtr.GetUnreadNum).
+		GET("list", ntfCtr.List)
+
+	r.Group("target_weight").Use(middleware.JwtMiddlewareGen(db)).
+		POST("", twCtr.Store)
+
+	r.Group("body_info").Use(middleware.JwtMiddlewareGen(db)).
+		POST("", bfiCtr.Store).
+		GET("banner_info", bfiCtr.BannerInfo)
+
+	r.Group("ate_food").Use(middleware.JwtMiddlewareGen(db)).
+		POST("", afCtr.Store).
+		GET("", afCtr.List)
 
 	r.Run(":9999")
 }
